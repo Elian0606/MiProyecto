@@ -54,7 +54,7 @@ while True:
 
     print(f'RAW: {raw:5d} | {voltaje:.2f} V | {porcentaje:.1f}% | 12b: {bits12:4d}")
     time.sleep(0.5)
-
+```
 ## 3. DESCRIPCIÓN DEL CÓDIGO
 
 ### 3.1. Importación de Módulos y Dependencias
