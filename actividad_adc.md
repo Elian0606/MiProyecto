@@ -60,13 +60,9 @@ while True:
 ### 3.1. Importación de Módulos y Dependencias
 
 El código de importación es el siguiente:
-```python
+python
 from machine import ADC, Pin
-import time
-
-## DESCRIPCIÓN DEL CÓDIGO 
- 
- 
+import tim 
 1. Importación de Módulos y Dependencias 
  
 from machine import ADC, Pin import time 
@@ -138,4 +134,3 @@ Arquitectura de adquisición:
 La implementación analizada demuestra una arquitectura software robusta para aplicaciones de adquisición de datos en sistemas embebidos. La encapsulación en una clase proporciona modularidad, facilitando la reutilización y mantenimiento del código. La solución aborda eficientemente múltiples representaciones de los datos ADC (raw, voltaje, porcentaje, 12 bits), satisfaciendo diversos requisitos de aplicación. 
  
 Desde la perspectiva de ingeniería de telecomunicaciones, el código muestra un uso apropiado de los recursos hardware, optimización computacional mediante operaciones de bits, y consideración de parámetros críticos como el voltaje de referencia. La estructura permite fácil extensión para incorporar funcionalidades adicionales como filtrado digital, calibración o gestión de múltiples canales ADC. 
-
