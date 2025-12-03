@@ -1,75 +1,54 @@
-# 📡 Documentación del Módulo Signal (`signal.py`)
+## Esquema
 
-Este módulo contiene la clase `Signal`, la cual es crucial para establecer la **comunicación serial** (PySerial) y la **visualización de datos en tiempo real** (Matplotlib), transformando los datos recibidos del microcontrolador en gráficos dinámicos.
 
-## Explicación Detallada del Código
+├── App/                        <-- Encapsulación del proyecto para la entrega
+│   ├── src/                        <-- Capa de Lógica (Paquete Python)
+│   │   ├── __init__.py             <-- Define 'src' como paquete.
+│   │   └── signal.py               <-- Clase central de comunicación y streaming.
+│   ├── scripts/                    <-- Capa de Ejecución
+│   │   └── run.py                  <-- Script de inicio, detección de puertos y control de errores.
+│   └── Signal.md                   <-- Documentación principal.
+├── .gitignore                      
+└── venv/
 
-1. Método __init__ (Constructor)
-Propósito: Inicializar la conexión serial.
+# 2. 📝 Definición de Componentes
 
-Acción: Crea el objeto Serial utilizando el puerto y la velocidad especificados. El timeout=1 asegura que la lectura no se bloquee indefinidamente.
+1. (Capas del Sistema)
+Esta sección define la responsabilidad principal de cada capa funcional dentro de tu arquitectura modular.
 
-2. Método leer_valores
-Propósito: Parsear la cadena de texto serial a una lista de números flotantes.
+Capa de Lógica del Sistema (app/src/):
 
-Proceso:
+Responsabilidad: Define el comportamiento central del proyecto.
 
-Llama a self.leer_linea() (que lee los datos del puerto y los decodifica a una cadena).
+Función: Se encarga de la conexión serial, el parsing de datos y la visualización en tiempo real.
 
-Verifica que la línea tenga el formato de lista ([... ]).
+Capa de Control y Ejecución (app/scripts/):
 
-Remueve los corchetes (linea[1:-1]) y usa .split(',') para separar los valores.
+Responsabilidad: Define el arranque robusto del sistema.
 
-Utiliza una comprensión de lista para convertir cada valor a un número float, preparándolo para ser graficado.
+Función: Gestiona la configuración de rutas (sys.path), la detección automática de puerto y el control de errores en el inicio.
 
-3. Método stream
-Propósito: Dibujar y actualizar la gráfica en tiempo real.
+Capa de Encapsulación (app/):
 
-Acciones Necesarias:
+Responsabilidad: Actúa como el contenedor principal del proyecto.
 
-plt.ion(): Habilita el modo interactivo de Matplotlib, permitiendo que la ventana de la gráfica se mantenga abierta y se actualice.
+Función: Agrupa y organiza las capas funcionales (src/ y scripts/) para la entrega y la importación.
 
-while True: Bucle infinito que mantiene la aplicación leyendo y dibujando datos continuamente.
+2. (Archivos Clave)
+Esta sección define la tarea específica que realiza cada archivo o mecanismo dentro del código.
 
-ax.clear(): Borra el contenido de la gráfica del ciclo anterior.
+signal.py (Módulo de Clase):
 
-plt.pause(0.01): Introduce una pausa mínima para forzar la actualización de la ventana, lo que crea el efecto de streaming.
+Tarea: Implementa la Clase Signal para la adquisición de datos seriales y el método stream() para la gráfica en vivo.
 
-## Código de la Clase Signal
+run.py (Script de Ejecución):
 
-```python
-from serial import Serial
-import matplotlib.pyplot as plt
+Tarea: Es el punto de entrada del programa. Llama a la lógica e implementa la detección de puerto (detectar_puerto_serial).
 
-class Signal:
-    def __init__(self, baudrate: int =115200, port: str = "COM3"):
-        self.baudrate = baudrate
-        self.port = port
-        self.ser = Serial(self.port, self.baudrate, timeout=1)
-    
-    def leer_linea(self) -> str:
-        linea = self.ser.readline()
-        return linea.decode("utf-8").strip()
+__init__.py (Archivo de Configuración):
 
-    def leer_valores(self) -> list[float]:
-        linea = self.leer_linea()
-        if linea.startswith('[') and linea.endswith(']'):
-            valores = linea[1:-1].split(',')
-            respuesta = [float(v.strip()) for v in valores]
-            return respuesta
-        return []
-    
-    def stream(self):
-        plt.ion() # Activa el modo interactivo
+Tarea: Define la carpeta src/ como un paquete de Python, permitiendo la correcta importación por run.py.
 
-        fig, ax = plt.subplots()
-        while True:
-            valores = self.leer_valores()
-            if valores:
-                ax.clear()
-                ax.plot(valores, marker="o")
-                ax.set_ylim(0, 1)
-                ax.set_title('Valores ADC')
-                ax.set_xlabel('Muestras')
-                ax.set_ylabel('Voltios')
-                plt.pause(0.01) # Pausa para actualizar la gráfica```
+Mecanismo try/finally (Estructura de Control):
+
+Tarea: Asegura que el recurso del puerto serial (detector_senal.ser.close()) se cierre de forma segura en todo momento, evitando bloqueos.
