@@ -1,17 +1,17 @@
 ## Esquema
 
 
-├── App/                        <-- Encapsulación del proyecto para la entrega
-│   ├── src/                        <-- Capa de Lógica (Paquete Python)
-│   │   ├── __init__.py             <-- Define 'src' como paquete.
-│   │   └── signal.py               <-- Clase central de comunicación y streaming.
-│   ├── scripts/                    <-- Capa de Ejecución
-│   │   └── run.py                  <-- Script de inicio, detección de puertos y control de errores.
-│   └── Signal.md                   <-- Documentación principal.
+├── App/
+│   ├── src/
+│   │   ├── __init__.py 
+│   │   └── signal.py              
+│   ├── scripts/                
+│   │   └── run.py                   
+│   └── Signal.md                   
 ├── .gitignore                      
 └── venv/
 
-# 2. 📝 Definición de Componentes
+# 2. Definición de Componentes
 
 1. (Capas del Sistema)
 Esta sección define la responsabilidad principal de cada capa funcional dentro de tu arquitectura modular.
